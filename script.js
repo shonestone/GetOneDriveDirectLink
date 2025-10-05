@@ -137,7 +137,7 @@ function load_mask_local() //从空白加载设置
 		addNewMask("长链接 (webUrl)", "${file.name} => ${file.webUrl}");
 		
 		// 短链（1drv.ms，方便分享，本质是重定向）
-		addNewMask("短链 (share link)", "${file.name} => ${file.shareUrl ? file.shareUrl : file.webUrl}");
+		addNewMask("短链 (share link)", "${file.name} => ${(() => { try { if (file.permissions && file.permissions.length && file.permissions[0].link && file.permissions[0].link.webUrl) return file.permissions[0].link.webUrl; } catch(e) {} if (typeof file.shareUrl === 'string') return file.shareUrl; if (file.sharingLink && file.sharingLink.webUrl) return file.sharingLink.webUrl; return file.webUrl; })()}");
 		
 		// 直链（downloadUrl，可直接下载，但有时效性）
 		addNewMask("直链 (downloadUrl)", "${file.name} => ${file['@microsoft.graph.downloadUrl']}");
