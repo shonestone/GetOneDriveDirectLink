@@ -137,7 +137,10 @@ function load_mask_local() //从空白加载设置
 		addNewMask("长链接 (webUrl)", "${file.name} => ${file.webUrl}");
 		
 		// 短链（1drv.ms，方便分享，本质是重定向）
-		addNewMask("短链 (share link)", "${file.name} => ${(() => { try { if (file.permissions && file.permissions.length && file.permissions[0].link && file.permissions[0].link.webUrl) return file.permissions[0].link.webUrl; } catch(e) {} if (typeof file.shareUrl === 'string') return file.shareUrl; if (file.sharingLink && file.sharingLink.webUrl) return file.sharingLink.webUrl; return file.webUrl; })()}");
+		addNewMask("短链 (share link)", "${file.name} => ${(() => { try { if (file.permissions && file.permissions.length && file.permissions[0].link && file.permissions[0].link.webUrl) return file.permissions[0].link.webUrl; } catch(e) {} if (file.link && file.link.webUrl) return file.link.webUrl; if (typeof file.shareUrl === 'string') return file.shareUrl; if (file.sharingLink && file.sharingLink.webUrl) return file.sharingLink.webUrl; return file.webUrl; })()}");
+
+		// 短链（仅输出链接）
+		addNewMask("短链-仅链接", "${(() => { try { if (file.permissions && file.permissions.length && file.permissions[0].link && file.permissions[0].link.webUrl) return file.permissions[0].link.webUrl; } catch(e) {} if (file.link && file.link.webUrl) return file.link.webUrl; if (typeof file.shareUrl === 'string') return file.shareUrl; if (file.sharingLink && file.sharingLink.webUrl) return file.sharingLink.webUrl; return file.webUrl; })()}");
 		
 		// 直链（downloadUrl，可直接下载，但有时效性）
 		addNewMask("直链 (downloadUrl)", "${file.name} => ${file['@microsoft.graph.downloadUrl']}");
@@ -260,7 +263,8 @@ function launchOneDrivePicker(action = "query"){
 		//advanced: {createLinkParameters: { type: "embed", scope: "anonymous" }},
 		advanced: {
 			redirectUri: "https://shonestone.github.io/GetOneDriveDirectLink/index.html",
-			queryParameters: "select=audio,content,createdBy,createdDateTime,cTag,deleted,description,eTag,file,fileSystemInfo,folder,id,image,lastModifiedBy,lastModifiedDateTime,location,malware,name,package,parentReference,photo,publication,remoteItem,root,searchResult,shared,sharepointIds,size,specialFolder,video,webDavUrl,webUrl,activities,children,listItem,permissions,thumbnails,versions,@microsoft.graph.conflictBehavior,@microsoft.graph.downloadUrl,@microsoft.graph.sourceUrl"
+			queryParameters: "select=audio,content,createdBy,createdDateTime,cTag,deleted,description,eTag,file,fileSystemInfo,folder,id,image,lastModifiedBy,lastModifiedDateTime,location,malware,name,package,parentReference,photo,publication,remoteItem,root,searchResult,shared,sharepointIds,size,specialFolder,video,webDavUrl,webUrl,activities,children,listItem,permissions,thumbnails,versions,@microsoft.graph.conflictBehavior,@microsoft.graph.downloadUrl,@microsoft.graph.sourceUrl",
+			createLinkParameters: { type: "view", scope: "anonymous" }
 
 		},
 		success: function(files) {do_success(files); /* success handler */ },
