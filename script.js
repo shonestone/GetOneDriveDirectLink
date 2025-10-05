@@ -130,6 +130,8 @@ function load_mask_local() //从空白加载设置
 		addNewMask("普通外链","http://storage.live.com/items/${file.id}:/${file.name}");
 		addNewMask("最短链接","http://storage.live.com/items/${file.id}");
 		addNewMask("如何自定义自己的掩码？","将我的外链掩码的authkey修改为你自己的即可");
+		addNewMask("原始共享链接","${file.name} => ${file['@microsoft.graph.downloadUrl']}");
+
 		if (Array.isArray(masksCfg))
 		{addNewMask("▲以上为版本更新，重新添加的掩码示例","");}
 		GM_setValue("new-mask-version",curMaskVersion);
