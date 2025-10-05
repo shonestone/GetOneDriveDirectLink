@@ -240,12 +240,13 @@ function launchOneDrivePicker(action = "query"){
 	outinfo.innerHTML = "正在等待API返回数据";
 	var odOptions = {
 
-		clientId: "fb6a43d6-b5ae-45c7-9643-ad08ae77e0ff",
+		clientId: "8b57f0ee-14a4-4888-bc40-b10e12a95dd9",
 		action: action, //share | download | query
 		multiSelect: true,
 		openInNewWindow: true,
 		//advanced: {createLinkParameters: { type: "embed", scope: "anonymous" }},
 		advanced: {
+			redirectUri: "https://shonestone.github.io/GetOneDriveDirectLink/index.html",
 			queryParameters: "select=audio,content,createdBy,createdDateTime,cTag,deleted,description,eTag,file,fileSystemInfo,folder,id,image,lastModifiedBy,lastModifiedDateTime,location,malware,name,package,parentReference,photo,publication,remoteItem,root,searchResult,shared,sharepointIds,size,specialFolder,video,webDavUrl,webUrl,activities,children,listItem,permissions,thumbnails,versions,@microsoft.graph.conflictBehavior,@microsoft.graph.downloadUrl,@microsoft.graph.sourceUrl"
 		},
 		success: function(files) {do_success(files); /* success handler */ },
