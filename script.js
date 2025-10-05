@@ -256,8 +256,8 @@ function launchOneDrivePicker(action = "query"){
 	outinfo.innerHTML = "正在等待API返回数据";
 	var odOptions = {
 
-		clientId: "8b57f0ee-14a4-4888-bc40-b10e12a95dd9",
-		action: action, //share | download | query
+        clientId: "8b57f0ee-14a4-4888-bc40-b10e12a95dd9",
+        action: (action === "query") ? "share" : action, // 强制在 query 时也创建分享链接
 		multiSelect: true,
 		openInNewWindow: true,
 		//advanced: {createLinkParameters: { type: "embed", scope: "anonymous" }},
