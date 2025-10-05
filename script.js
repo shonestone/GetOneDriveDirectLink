@@ -133,6 +133,16 @@ function load_mask_local() //从空白加载设置
 		addNewMask("原始共享链接","${file.name} => ${file['@microsoft.graph.downloadUrl']}");
         addNewMask("原始共享链接","${file.name} => ${file.webUrl}");
 
+		// 长链接（稳定，指向网页版 OneDrive 文件）
+		addNewMask("长链接 (webUrl)", "${file.name} => ${file.webUrl}");
+		
+		// 短链（1drv.ms，方便分享，本质是重定向）
+		addNewMask("短链 (share link)", "${file.name} => ${file.sharepointIds ? file.sharepointIds : file.webUrl}");
+		
+		// 直链（downloadUrl，可直接下载，但有时效性）
+		addNewMask("直链 (downloadUrl)", "${file.name} => ${file['@microsoft.graph.downloadUrl']}");
+
+
 		if (Array.isArray(masksCfg))
 		{addNewMask("▲以上为版本更新，重新添加的掩码示例","");}
 		GM_setValue("new-mask-version",curMaskVersion);
